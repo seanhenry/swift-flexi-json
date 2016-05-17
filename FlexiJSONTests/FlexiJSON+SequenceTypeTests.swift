@@ -43,9 +43,9 @@ class FlexiJSON_SequenceTypeTests: XCTestCase {
 
     func test_generate_shouldGenerateArrayElements() {
         let json = FlexiJSON(array: [1, 2, 3])
-        var i = 1
+        var i: Int64 = 1
         for fragment in json {
-            XCTAssertEqual(fragment as? Int, i)
+            XCTAssertEqual(fragment, FlexiJSON(int: i))
             i += 1
         }
     }

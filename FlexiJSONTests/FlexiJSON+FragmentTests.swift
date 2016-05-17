@@ -170,7 +170,7 @@ class FlexiJSON_Fragment: XCTestCase {
     }
 
     func test_case_shouldConvertNull() {
-        XCTAssertNotNil(Fragment.Null.cast(JSONNull.self))
+        XCTAssertNotNil(Fragment.Null.cast(NSNull.self))
     }
 
     // MARK: - Helpers

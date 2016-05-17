@@ -67,7 +67,7 @@ public struct FlexiJSON {
         either = .Error(error)
     }
 
-    private init(fragment: Fragment) {
+    init(fragment: Fragment) {
         either = .Fragment(fragment)
     }
 }
@@ -166,7 +166,10 @@ extension FlexiJSON {
     }
 
     public var null: JSONNull? {
-        return either.fragment?.cast(JSONNull.self)
+        if either.fragment?.cast(NSNull.self) != nil {
+            return JSONNull()
+        }
+        return nil
     }
 
     public var error: String? {

@@ -25,10 +25,14 @@ import Swift
 
 extension FlexiJSON: SequenceType {
 
-    public func generate() -> IndexingGenerator<JSONArray> {
+    public func generate() -> IndexingGenerator<[FlexiJSON]> {
         if let array = array {
-            return array.generate()
+            return array.map(toFlexiJSON).generate()
         }
         return IndexingGenerator([])
+    }
+
+    private func toFlexiJSON(value: AnyObject) -> FlexiJSON {
+        return FlexiJSON(fragment: .from(value))
     }
 }

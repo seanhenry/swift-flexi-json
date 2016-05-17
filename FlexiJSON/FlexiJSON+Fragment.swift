@@ -81,7 +81,7 @@ extension FlexiJSON {
             case .Array(let a):
                 return jsonArray(a) as? T
             case .Null:
-                return JSONNull() as? T
+                return NSNull() as? T
             }
         }
 
