@@ -72,32 +72,6 @@ public struct FlexiJSON {
     }
 }
 
-// MARK: - Either
-
-extension FlexiJSON {
-
-    typealias JSONFragment = Fragment
-
-    private enum Either {
-        case Fragment(JSONFragment)
-        case Error(String)
-
-        var fragment: JSONFragment? {
-            if case .Fragment(let fragment) = self {
-                return fragment
-            }
-            return nil
-        }
-
-        var error: String? {
-            if case .Error(let error) = self {
-                return error
-            }
-            return nil
-        }
-    }
-}
-
 // MARK: - Subscript
 extension FlexiJSON {
 
