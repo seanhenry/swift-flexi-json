@@ -51,6 +51,7 @@ class FlexiJSONTests: XCTestCase {
     // MARK: - subscript key set
 
     func test_subscript_shouldReplaceValue() {
+        json!["key"] = "success"
         json!["key"] = FlexiJSON(string: "success")
         XCTAssertEqual(json["key"].string, "success")
     }

@@ -36,39 +36,39 @@ public struct FlexiJSON {
     private var either: Either
 
     public init(dictionary: JSONDictionary) {
-        self.init(value: .from(dictionary))
+        self.init(fragment: .from(dictionary))
     }
 
     public init(array: JSONArray) {
-        self.init(value: .from(array))
+        self.init(fragment: .from(array))
     }
 
     public init(string: JSONString) {
-        self.init(value: .String(string))
+        self.init(fragment: .String(string))
     }
 
     public init(int: JSONInt) {
-        self.init(value: .Double(Double(int)))
+        self.init(fragment: .Double(Double(int)))
     }
 
     public init(double: JSONDouble) {
-        self.init(value: .Double(double))
+        self.init(fragment: .Double(double))
     }
 
     public init(bool: JSONBool) {
-        self.init(value: .Bool(bool))
+        self.init(fragment: .Bool(bool))
     }
 
     public init(null: JSONNull) {
-        self.init(value: .Null)
+        self.init(fragment: .Null)
     }
 
     public init(error: String) {
         either = .Error(error)
     }
 
-    private init(value: Value) {
-        either = .Value(value)
+    private init(fragment: Fragment) {
+        either = .Fragment(fragment)
     }
 }
 
@@ -76,15 +76,15 @@ public struct FlexiJSON {
 
 extension FlexiJSON {
 
-    typealias JSONValue = Value
+    typealias JSONFragment = Fragment
 
     private enum Either {
-        case Value(JSONValue)
+        case Fragment(JSONFragment)
         case Error(String)
 
-        var value: JSONValue? {
-            if case .Value(let value) = self {
-                return value
+        var fragment: JSONFragment? {
+            if case .Fragment(let fragment) = self {
+                return fragment
             }
             return nil
         }
@@ -107,18 +107,18 @@ extension FlexiJSON {
                 either = .Error(error)
                 return
             }
-            if case .Dictionary(var d)? = either.value,
-               let newValue = newJSON.either.value {
-                d[key] = newValue
-                either = .Value(.Dictionary(d))
+            if case .Dictionary(var d)? = either.fragment,
+               let newFragment = newJSON.either.fragment {
+                d[key] = newFragment
+                either = .Fragment(.Dictionary(d))
             }
         }
         get {
-            guard case .Dictionary(let d)? = either.value,
-                  let value = d[key] else {
+            guard case .Dictionary(let d)? = either.fragment,
+                  let fragment = d[key] else {
                 return FlexiJSON(error: "Key '\(key)' was not found.")
             }
-            return FlexiJSON(value: value)
+            return FlexiJSON(fragment: fragment)
         }
     }
 
@@ -128,20 +128,20 @@ extension FlexiJSON {
                 either = .Error(error)
                 return
             }
-            if case .Array(var a)? = either.value,
-               let newValue = newJSON.either.value {
-                a[index] = newValue
-                either = .Value(.Array(a))
+            if case .Array(var a)? = either.fragment,
+               let newFragment = newJSON.either.fragment {
+                a[index] = newFragment
+                either = .Fragment(.Array(a))
             }
         }
         get {
-            guard case .Array(let a)? = either.value else {
+            guard case .Array(let a)? = either.fragment else {
                 return FlexiJSON(error: "Attempted to access a nonexistant array.")
             }
             guard index < a.count else {
                 return FlexiJSON(error: "Index '\(index)' is out of bounds.")
             }
-            return FlexiJSON(value: a[index])
+            return FlexiJSON(fragment: a[index])
         }
     }
 }
@@ -152,8 +152,8 @@ extension FlexiJSON: Equatable {
 
 public func ==(lhs: FlexiJSON, rhs: FlexiJSON) -> Bool {
     switch (lhs.either, rhs.either) {
-    case (.Value(let lhsValue), .Value(let rhsValue)):
-        return lhsValue == rhsValue
+    case (.Fragment(let lhsFragment), .Fragment(let rhsFragment)):
+        return lhsFragment == rhsFragment
     case (.Error(let lhsError), .Error(let rhsError)):
         return lhsError == rhsError
     default:
@@ -165,34 +165,34 @@ public func ==(lhs: FlexiJSON, rhs: FlexiJSON) -> Bool {
 extension FlexiJSON {
 
     public var dictionary: JSONDictionary? {
-        return either.value?.cast(JSONDictionary.self)
+        return either.fragment?.cast(JSONDictionary.self)
     }
 
     public var array: JSONArray? {
-        return either.value?.cast(JSONArray.self)
+        return either.fragment?.cast(JSONArray.self)
     }
 
     public var string: JSONString? {
-        return either.value?.cast(String.self)
+        return either.fragment?.cast(String.self)
     }
 
     public var int: JSONInt? { 
-        if let double = either.value?.cast(Double.self) {
+        if let double = either.fragment?.cast(Double.self) {
             return Int64(double)
         }
         return nil
     }
 
     public var double: JSONDouble? {
-        return either.value?.cast(Double.self)
+        return either.fragment?.cast(Double.self)
     }
 
     public var bool: JSONBool? {
-        return either.value?.cast(Bool.self)
+        return either.fragment?.cast(Bool.self)
     }
 
     public var null: JSONNull? {
-        return either.value?.cast(JSONNull.self)
+        return either.fragment?.cast(JSONNull.self)
     }
 
     public var error: String? {

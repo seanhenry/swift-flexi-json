@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+ValueTests.swift
+//  FlexiJSON+FragmentTests.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -24,135 +24,135 @@
 import XCTest
 @testable import FlexiJSON
 
-class FlexiJSON_Value: XCTestCase {
+class FlexiJSON_Fragment: XCTestCase {
 
-    typealias Value = FlexiJSON.Value
+    typealias Fragment = FlexiJSON.Fragment
 
-    func test_equals_shouldBeTrue_whenStringValuesMatch() {
-        XCTAssertEqual(Value.String("hello"), Value.String("hello"))
+    func test_equals_shouldBeTrue_whenStringFragmentsMatch() {
+        XCTAssertEqual(Fragment.String("hello"), Fragment.String("hello"))
     }
 
-    func test_equals_shouldBeFalse_whenStringValuesDoNotMatch() {
-        XCTAssertNotEqual(Value.String("hello"), Value.String("hi"))
+    func test_equals_shouldBeFalse_whenStringFragmentsDoNotMatch() {
+        XCTAssertNotEqual(Fragment.String("hello"), Fragment.String("hi"))
     }
 
-    func test_equals_shouldBeFalse_whenDictionaryValuesDoNotMatch() {
-        let dict = ["key": Value.String("hi")]
-        let dict2 = ["key": Value.String("hello")]
-        XCTAssertNotEqual(Value.Dictionary(dict), Value.Dictionary(dict2))
+    func test_equals_shouldBeFalse_whenDictionaryFragmentsDoNotMatch() {
+        let dict = ["key": Fragment.String("hi")]
+        let dict2 = ["key": Fragment.String("hello")]
+        XCTAssertNotEqual(Fragment.Dictionary(dict), Fragment.Dictionary(dict2))
     }
 
     func test_equals_shouldBeFalse_whenDictionaryLengthsAreDifferent() {
-        let dict = ["key": Value.String("hello")]
-        let dict2 = ["key": Value.String("hello"), "key2" : Value.String("some")]
-        XCTAssertNotEqual(Value.Dictionary(dict), Value.Dictionary(dict2))
+        let dict = ["key": Fragment.String("hello")]
+        let dict2 = ["key": Fragment.String("hello"), "key2" : Fragment.String("some")]
+        XCTAssertNotEqual(Fragment.Dictionary(dict), Fragment.Dictionary(dict2))
     }
 
     func test_equals_shouldBeTrue_whenDictionariesAreEqual() {
-        XCTAssertEqual(Value.from(allTypesDictionary()), Value.from(allTypesDictionary()))
+        XCTAssertEqual(Fragment.from(allTypesDictionary()), Fragment.from(allTypesDictionary()))
     }
 
     func test_equals_shouldBeFalse_whenDoublesAreDifferent() {
-        XCTAssertNotEqual(Value.Double(123.456), Value.Double(987.654))
+        XCTAssertNotEqual(Fragment.Double(123.456), Fragment.Double(987.654))
     }
 
     func test_equals_shouldBeTrue_whenDoublesAreEqual() {
-        XCTAssertEqual(Value.Double(123.0), Value.Double(123.0))
+        XCTAssertEqual(Fragment.Double(123.0), Fragment.Double(123.0))
     }
 
     func test_equals_shouldBeFalse_whenBoolsAreDifferent() {
-        XCTAssertNotEqual(Value.Bool(true), Value.Bool(false))
+        XCTAssertNotEqual(Fragment.Bool(true), Fragment.Bool(false))
     }
 
     func test_equals_shouldBeTrue_whenBoolsAreEqual() {
-        XCTAssertEqual(Value.Bool(true), Value.Bool(true))
+        XCTAssertEqual(Fragment.Bool(true), Fragment.Bool(true))
     }
 
     func test_equals_shouldBeFalse_whenArraysAreDifferent() {
-        let array1 = [Value.String("hello"), Value.Double(123), Value.Bool(true)]
-        let array2 = [Value.String("hello")]
-        XCTAssertNotEqual(Value.Array(array1), Value.Array(array2))
+        let array1 = [Fragment.String("hello"), Fragment.Double(123), Fragment.Bool(true)]
+        let array2 = [Fragment.String("hello")]
+        XCTAssertNotEqual(Fragment.Array(array1), Fragment.Array(array2))
     }
 
     func test_equals_shouldBeTrue_whenArraysAreEqual() {
-        let array = [Value.String("hello"), Value.Double(123), Value.Bool(true)]
-        XCTAssertEqual(Value.Array(array), Value.Array(array))
+        let array = [Fragment.String("hello"), Fragment.Double(123), Fragment.Bool(true)]
+        XCTAssertEqual(Fragment.Array(array), Fragment.Array(array))
     }
 
-    func test_equals_shouldBeFalse_whenValuesAreDifferentTypes() {
-        XCTAssertNotEqual(Value.Bool(false), Value.String("false"))
+    func test_equals_shouldBeFalse_whenFragmentsAreDifferentTypes() {
+        XCTAssertNotEqual(Fragment.Bool(false), Fragment.String("false"))
     }
 
-    func test_equals_shouldBeTrue_whenBothValuesAreNull() {
-        XCTAssertEqual(Value.Null, Value.Null)
+    func test_equals_shouldBeTrue_whenBothFragmentsAreNull() {
+        XCTAssertEqual(Fragment.Null, Fragment.Null)
     }
 
     // MARK: - from: AnyObject
 
     func test_from_shouldCreateFromString() {
-        XCTAssertEqual(Value.from("string"), Value.String("string"))
+        XCTAssertEqual(Fragment.from("string"), Fragment.String("string"))
     }
 
     func test_from_shouldCreateFromInt() {
-        XCTAssertEqual(Value.from(123), Value.Double(123))
+        XCTAssertEqual(Fragment.from(123), Fragment.Double(123))
     }
 
     func test_from_shouldCreateFromDouble() {
-        XCTAssertEqual(Value.from(123.456), Value.Double(123.456))
+        XCTAssertEqual(Fragment.from(123.456), Fragment.Double(123.456))
     }
 
     func test_from_shouldCreateFromBool() {
-        XCTAssertEqual(Value.from(true), Value.Bool(true))
+        XCTAssertEqual(Fragment.from(true), Fragment.Bool(true))
     }
 
     func test_from_shouldCreateFromNull() {
-        XCTAssertNotNil(Value.from(NSNull()))
+        XCTAssertNotNil(Fragment.from(NSNull()))
     }
 
     // MARK: - from: JSONDictionary
 
     func test_from_shouldCreateFromDictionary() {
-        let fromDictionary = Value.from(allTypesDictionary())
-        let dictionary = Value.Dictionary(allTypesDictionaryValue())
+        let fromDictionary = Fragment.from(allTypesDictionary())
+        let dictionary = Fragment.Dictionary(allTypesDictionaryFragment())
         XCTAssertEqual(fromDictionary, dictionary)
     }
 
     func test_from_shouldCreateFromNestedDictionary() {
-        let fromDictionary = Value.from(nestedDictionary())
-        let dictionary = Value.Dictionary(nestedDictionaryValue())
+        let fromDictionary = Fragment.from(nestedDictionary())
+        let dictionary = Fragment.Dictionary(nestedDictionaryFragment())
         XCTAssertEqual(fromDictionary, dictionary)
     }
 
     // MARK: - from: JSONArray
 
     func test_from_shouldCreateFromArray() {
-        let fromArray = Value.from(allTypesArray())
-        let array = Value.Array(allTypesArrayValue())
+        let fromArray = Fragment.from(allTypesArray())
+        let array = Fragment.Array(allTypesArrayFragment())
         XCTAssertEqual(fromArray, array)
     }
 
     func test_from_shouldCreateNestedArray() {
-        let fromArray = Value.from(nestedArray())
-        let array = Value.Array(nestedArrayValue())
+        let fromArray = Fragment.from(nestedArray())
+        let array = Fragment.Array(nestedArrayFragment())
         XCTAssertEqual(fromArray, array)
     }
 
     // MARK: - cast
 
     func test_cast_shouldConvertString() {
-        XCTAssertEqual(Value.String("some").cast(String.self), "some")
+        XCTAssertEqual(Fragment.String("some").cast(String.self), "some")
     }
 
     func test_cast_shouldConvertDouble() {
-        XCTAssertEqual(Value.Double(123).cast(Double.self), 123)
+        XCTAssertEqual(Fragment.Double(123).cast(Double.self), 123)
     }
 
     func test_cast_shouldConvertBool() {
-        XCTAssertEqual(Value.Bool(true).cast(Bool.self), true)
+        XCTAssertEqual(Fragment.Bool(true).cast(Bool.self), true)
     }
 
     func test_cast_shouldConvertDictionary() {
-        let dictionary = Value.Dictionary(allTypesDictionaryValue()).cast(JSONDictionary.self)
+        let dictionary = Fragment.Dictionary(allTypesDictionaryFragment()).cast(JSONDictionary.self)
         XCTAssertEqual(dictionary?["string"] as? String, "string")
         XCTAssertEqual(dictionary?["int"] as? Int, 123)
         XCTAssertEqual(dictionary?["double"] as? Double, 123.456)
@@ -161,7 +161,7 @@ class FlexiJSON_Value: XCTestCase {
     }
 
     func test_cast_shouldConvertArray() {
-        let array = Value.Array(allTypesArrayValue()).cast(JSONArray.self)
+        let array = Fragment.Array(allTypesArrayFragment()).cast(JSONArray.self)
         XCTAssertEqual(array?[0] as? String, "string")
         XCTAssertEqual(array?[1] as? Int, 123)
         XCTAssertEqual(array?[1] as? Double, 123.0)
@@ -170,7 +170,7 @@ class FlexiJSON_Value: XCTestCase {
     }
 
     func test_case_shouldConvertNull() {
-        XCTAssertNotNil(Value.Null.cast(JSONNull.self))
+        XCTAssertNotNil(Fragment.Null.cast(JSONNull.self))
     }
 
     // MARK: - Helpers
@@ -184,7 +184,7 @@ class FlexiJSON_Value: XCTestCase {
         ]
     }
 
-    func allTypesDictionaryValue() -> [String : Value] {
+    func allTypesDictionaryFragment() -> [String : Fragment] {
         return [
             "string": .String("string"),
             "int": .Double(123),
@@ -203,7 +203,7 @@ class FlexiJSON_Value: XCTestCase {
         ]
     }
 
-    func nestedDictionaryValue() -> [String : Value] {
+    func nestedDictionaryFragment() -> [String : Fragment] {
         return [
             "1": .Dictionary([
                 "2": .Dictionary([
@@ -222,7 +222,7 @@ class FlexiJSON_Value: XCTestCase {
         ]
     }
 
-    func allTypesArrayValue() -> [Value] {
+    func allTypesArrayFragment() -> [Fragment] {
         return [
             .String("string"),
             .Double(123),
@@ -242,7 +242,7 @@ class FlexiJSON_Value: XCTestCase {
         ]
     }
 
-    func nestedArrayValue() -> [Value] {
+    func nestedArrayFragment() -> [Fragment] {
         return [
             .Array([
                 .String("string"),
