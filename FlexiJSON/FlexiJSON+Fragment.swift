@@ -99,6 +99,26 @@ extension FlexiJSON {
     }
 }
 
+extension FlexiJSON.Fragment: CustomStringConvertible {
+
+    var description: JSONString {
+        switch self {
+        case .String(let s):
+            return s
+        case .Dictionary(let d):
+            return d.description
+        case .Array(let a):
+            return a.description
+        case .Double(let d):
+            return d.description
+        case .Bool(let b):
+            return b.description
+        case .Null:
+            return "null"
+        }
+    }
+}
+
 private func ==(lhs: [String : FlexiJSON.Fragment], rhs: [String : FlexiJSON.Fragment]) -> Bool {
     guard lhs.count == rhs.count else { return false }
     for (key, _) in lhs {

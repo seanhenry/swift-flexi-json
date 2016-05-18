@@ -173,6 +173,44 @@ class FlexiJSON_Fragment: XCTestCase {
         XCTAssertNotNil(Fragment.Null.cast(NSNull.self))
     }
 
+    // MARK: - description
+
+    func test_description_whenString() {
+        let description = "string"
+        let fragment = Fragment.String(description)
+        XCTAssertEqual(fragment.description, description)
+    }
+
+    func test_description_whenDictionary() {
+        let dictionary = ["key": Fragment.String("value")]
+        let description = dictionary.description
+        XCTAssertEqual(Fragment.Dictionary(dictionary).description, description)
+    }
+
+    func test_description_whenArray() {
+        let array = [Fragment.String("string"), Fragment.Double(123)]
+        let description = array.description
+        XCTAssertEqual(Fragment.Array(array).description, description)
+    }
+
+    func test_description_whenDouble() {
+        let double = 1.99
+        let description = double.description
+        XCTAssertEqual(Fragment.Double(double).description, description)
+    }
+    
+
+    func test_description_whenBool() {
+        let bool = true
+        let description = bool.description
+        XCTAssertEqual(Fragment.Bool(bool).description, description)
+    }
+
+    func test_description_whenNull() {
+        let description = "null"
+        XCTAssertEqual(Fragment.Null.description, "null")
+    }
+
     // MARK: - Helpers
 
     func allTypesDictionary() -> [String : AnyObject] {
