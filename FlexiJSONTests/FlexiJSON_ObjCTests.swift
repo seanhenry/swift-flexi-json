@@ -51,7 +51,7 @@ class FlexiJSON_ObjCTests: XCTestCase {
         XCTAssertEqual(json, FlexiJSON(string: "string"))
     }
 
-    // MARK: init string
+    // MARK: - init string
 
     func test_init_string_shouldSetError_whenInvalidString() {
         let string = "not json"

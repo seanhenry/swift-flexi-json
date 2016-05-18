@@ -2,8 +2,9 @@ import FlexiJSON
 /*:
  # FlexiJSON
  ## Creation
- Create a flexible JSON object from dictionary, array, string and other JSON fragments.
+ Create a flexible JSON object from dictionary, array, data, string and other JSON fragments.
 */
+var json = FlexiJSON(jsonString: "{ \"simple\": \"json\" }")
 let dictionary = [
     "item": [
         "id": 123456789,
@@ -16,7 +17,7 @@ let dictionary = [
         ],
     ]
 ]
-var json = FlexiJSON(dictionary: dictionary)
+json = FlexiJSON(dictionary: dictionary)
 /*:
  ## Browse
  Use subscript to navigate through your JSON and access JSON fragments from the properties.
@@ -30,14 +31,14 @@ json["item"].dictionary
 json["item"]["related_items"].array
 /*:
  ## Mutability
- Change the JSON by assigning JSON fragments.
+ Change values.
  */
 json["item"]["for_sale"] = true
 json["item"]["for_sale"].bool
 //: Create new fields.
 json["new"] = "field"
 json["new"].string
-//: Change the fragment type.
+//: Change the type.
 json["item"]["for_sale"] = nil
 json["item"]["for_sale"].null
 /*:
