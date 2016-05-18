@@ -28,6 +28,8 @@ class FlexiJSON_Fragment: XCTestCase {
 
     typealias Fragment = FlexiJSON.Fragment
 
+    // MARK: ==
+
     func test_equals_shouldBeTrue_whenStringFragmentsMatch() {
         XCTAssertEqual(Fragment.String("hello"), Fragment.String("hello"))
     }
@@ -109,6 +111,10 @@ class FlexiJSON_Fragment: XCTestCase {
         XCTAssertNotNil(Fragment.from(NSNull()))
     }
 
+    func test_from_shouldBeNil_whenNotKnownJSONType() {
+        XCTAssertNil(Fragment.from(NonJSON()))
+    }
+
     // MARK: - from: JSONDictionary
 
     func test_from_shouldCreateFromDictionary() {
@@ -123,6 +129,10 @@ class FlexiJSON_Fragment: XCTestCase {
         XCTAssertEqual(fromDictionary, dictionary)
     }
 
+    func test_from_shouldBeNil_whenDictionaryContainingNonJSONType() {
+        XCTAssertNil(Fragment.from(["key": NonJSON()]))
+    }
+
     // MARK: - from: JSONArray
 
     func test_from_shouldCreateFromArray() {
@@ -135,6 +145,10 @@ class FlexiJSON_Fragment: XCTestCase {
         let fromArray = Fragment.from(nestedArray())
         let array = Fragment.Array(nestedArrayFragment())
         XCTAssertEqual(fromArray, array)
+    }
+
+    func test_from_shouldBeNil_whenArrayContainsNonJSONType() {
+        XCTAssertNil(Fragment.from([NonJSON()]))
     }
 
     // MARK: - cast
@@ -290,4 +304,6 @@ class FlexiJSON_Fragment: XCTestCase {
                 ])
         ]
     }
+
+    class NonJSON {}
 }

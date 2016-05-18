@@ -55,7 +55,7 @@ builtJSON["item"]["related_items"] = [["id": 987654321], ["id": 321456987]]
 builtJSON["new"] = "field"
 builtJSON.dictionary
 /*:
- ## Compare
+ ## Equatability
  FlexiJSON conforms to the Equatable protocol.
  */
 builtJSON == json

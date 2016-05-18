@@ -34,7 +34,7 @@ extension FlexiJSON {
         case Bool(JSONBool)
         case Null
 
-        static func from(anyObject: AnyObject) -> Fragment {
+        static func from(anyObject: AnyObject) -> Fragment? {
             if let string = anyObject as? JSONString {
                 return .String(string)
             } else if let number = anyObject as? NSNumber {
@@ -46,19 +46,29 @@ extension FlexiJSON {
             } else if anyObject is NSNull {
                 return .Null
             }
-            fatalError()
+            return nil
         }
 
-        static func from(dictionary: JSONDictionary) -> Fragment {
+        static func from(dictionary: JSONDictionary) -> Fragment? {
             var result = [JSONString : Fragment]()
             for (key, value) in dictionary {
-                result[key] = from(value)
+                guard let value = from(value) else {
+                    return nil
+                }
+                result[key] = value
             }
             return .Dictionary(result)
         }
 
-        static func from(array: JSONArray) -> Fragment {
-            return .Array(array.map { from($0) })
+        static func from(array: JSONArray) -> Fragment? {
+            var result = [Fragment]()
+            for object in array {
+                guard let fragment = from(object) else {
+                    return nil
+                }
+                result.append(fragment)
+            }
+            return .Array(result)
         }
 
         private static func from(number: NSNumber) -> Fragment {

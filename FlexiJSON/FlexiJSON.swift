@@ -67,7 +67,11 @@ public struct FlexiJSON {
         either = .Error(error)
     }
 
-    init(fragment: Fragment) {
+    init(fragment: Fragment?) {
+        guard let fragment = fragment else {
+            either = .Error("Initialised FlexiJSON with a non json object.")
+            return
+        }
         either = .Fragment(fragment)
     }
 }

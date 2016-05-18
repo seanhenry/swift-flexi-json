@@ -42,6 +42,13 @@ class FlexiJSONTests: XCTestCase {
         json = FlexiJSON(dictionary: dictionary)
     }
 
+    // MARK: - init value
+
+    func test_init_value_shouldSetError_whenValueIsNil() {
+        let json = FlexiJSON(fragment: nil)
+        XCTAssertEqual(json.error, "Initialised FlexiJSON with a non json object.")
+    }
+
     // MARK: - subscript key get
 
     func test_subscript_shouldSetError() {
