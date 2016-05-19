@@ -88,4 +88,22 @@ class FlexiJSON_ObjCTests: XCTestCase {
         let expected = try? NSJSONSerialization.dataWithJSONObject(array, options: [])
         XCTAssertEqual(FlexiJSON(array: array).data, expected)
     }
+
+    // MARK: - jsonString
+
+    func test_jsonString_shouldNotConvertNonJSONObject() {
+        XCTAssertNil(FlexiJSON(string: "string").jsonString)
+    }
+
+    func test_jsonString_shouldConvertDictionary() {
+        let dictionary = ["key": "value"]
+        let expected = "{\"key\":\"value\"}"
+        XCTAssertEqual(FlexiJSON(dictionary: dictionary).jsonString, expected)
+    }
+
+    func test_jsonString_shouldConvertArray() {
+        let array = [["key": "value"]]
+        let expected = "[{\"key\":\"value\"}]"
+        XCTAssertEqual(FlexiJSON(array: array).jsonString, expected)
+    }
 }

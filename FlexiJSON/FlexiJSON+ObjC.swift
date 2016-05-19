@@ -49,4 +49,11 @@ extension FlexiJSON {
         }
         return try? NSJSONSerialization.dataWithJSONObject(fragment, options: [])
     }
+
+    public var jsonString: String? {
+        guard let data = data else {
+            return nil
+        }
+        return String(data: data, encoding: NSUTF8StringEncoding)
+    }
 }
