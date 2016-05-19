@@ -1,5 +1,5 @@
 //
-//  FlexiJSON_ObjCTests.swift
+//  FlexiJSON+ObjCTests.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -69,5 +69,23 @@ class FlexiJSON_ObjCTests: XCTestCase {
         let string = "\"fragment\""
         let json = FlexiJSON(jsonString: string)
         XCTAssertEqual(json, FlexiJSON(string: "fragment"))
+    }
+
+    // MARK: - data
+
+    func test_data_shouldNotConvertNonJSONObject() {
+        XCTAssertNil(FlexiJSON(string: "string").data)
+    }
+
+    func test_data_shouldConvertDictionary() {
+        let dictionary = ["key": "value"]
+        let expected = try? NSJSONSerialization.dataWithJSONObject(dictionary, options: [])
+        XCTAssertEqual(FlexiJSON(dictionary: dictionary).data, expected)
+    }
+
+    func test_data_shouldConvertArray() {
+        let array = [["key": "value"]]
+        let expected = try? NSJSONSerialization.dataWithJSONObject(array, options: [])
+        XCTAssertEqual(FlexiJSON(array: array).data, expected)
     }
 }

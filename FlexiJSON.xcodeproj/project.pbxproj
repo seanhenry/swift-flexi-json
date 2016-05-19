@@ -31,7 +31,7 @@
 		1444DA2B1CEB84B40010396E /* FlexiJSON+SequenceTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1444DA2A1CEB84B40010396E /* FlexiJSON+SequenceTypeTests.swift */; };
 		1444DA2E1CEB8BE10010396E /* FlexiJSON+Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1444DA2D1CEB8BE10010396E /* FlexiJSON+Either.swift */; };
 		14960E001CED2A31002781D4 /* FlexiJSON+ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14960DFF1CED2A31002781D4 /* FlexiJSON+ObjC.swift */; };
-		14960E021CED2A4D002781D4 /* FlexiJSON_ObjCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14960E011CED2A4D002781D4 /* FlexiJSON_ObjCTests.swift */; };
+		14960E021CED2A4D002781D4 /* FlexiJSON+ObjCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14960E011CED2A4D002781D4 /* FlexiJSON+ObjCTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,7 +72,7 @@
 		1444DA2A1CEB84B40010396E /* FlexiJSON+SequenceTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlexiJSON+SequenceTypeTests.swift"; sourceTree = "<group>"; };
 		1444DA2D1CEB8BE10010396E /* FlexiJSON+Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlexiJSON+Either.swift"; sourceTree = "<group>"; };
 		14960DFF1CED2A31002781D4 /* FlexiJSON+ObjC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlexiJSON+ObjC.swift"; sourceTree = "<group>"; };
-		14960E011CED2A4D002781D4 /* FlexiJSON_ObjCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlexiJSON_ObjCTests.swift; sourceTree = "<group>"; };
+		14960E011CED2A4D002781D4 /* FlexiJSON+ObjCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FlexiJSON+ObjCTests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +147,7 @@
 				1444DA221CEB7BDE0010396E /* FlexiJSON+ArrayLiteralConvertibleTests.swift */,
 				1444DA261CEB7D4C0010396E /* FlexiJSON+DictionaryLiteralConvertibleTests.swift */,
 				1444DA2A1CEB84B40010396E /* FlexiJSON+SequenceTypeTests.swift */,
-				14960E011CED2A4D002781D4 /* FlexiJSON_ObjCTests.swift */,
+				14960E011CED2A4D002781D4 /* FlexiJSON+ObjCTests.swift */,
 			);
 			path = FlexiJSONTests;
 			sourceTree = "<group>";
@@ -281,7 +281,7 @@
 			files = (
 				1444DA131CEB79920010396E /* FlexiJSON+BoolLiteralConvertibleTests.swift in Sources */,
 				1422E7FF1CEA669900A58768 /* FlexiJSON+FragmentTests.swift in Sources */,
-				14960E021CED2A4D002781D4 /* FlexiJSON_ObjCTests.swift in Sources */,
+				14960E021CED2A4D002781D4 /* FlexiJSON+ObjCTests.swift in Sources */,
 				1444DA2B1CEB84B40010396E /* FlexiJSON+SequenceTypeTests.swift in Sources */,
 				1444DA171CEB7A520010396E /* FlexiJSON+FloatLiteralConvertibleTests.swift in Sources */,
 				1444DA1B1CEB7AD30010396E /* FlexiJSON+IntegerLiteralConvertibleTests.swift in Sources */,

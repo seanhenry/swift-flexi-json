@@ -33,7 +33,7 @@ public typealias JSONNull = ()
 
 public struct FlexiJSON {
 
-    private var either: Either
+    var either: Either
 
     public init(dictionary: JSONDictionary) {
         self.init(fragment: .from(dictionary))

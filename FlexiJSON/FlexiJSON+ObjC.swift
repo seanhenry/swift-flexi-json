@@ -42,4 +42,11 @@ extension FlexiJSON {
         }
         self.init(data: data)
     }
+
+    public var data: NSData? {
+        guard let fragment = either.fragment?.cast(AnyObject.self) where NSJSONSerialization.isValidJSONObject(fragment) else {
+            return nil
+        }
+        return try? NSJSONSerialization.dataWithJSONObject(fragment, options: [])
+    }
 }
