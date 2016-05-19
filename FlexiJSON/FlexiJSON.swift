@@ -80,47 +80,63 @@ public struct FlexiJSON {
 extension FlexiJSON {
 
     public subscript(key: String) -> FlexiJSON {
-        set(newJSON) {
-            if let error = newJSON.error {
-                either = .Error(error)
-                return
-            }
-            if case .Dictionary(var d)? = either.fragment,
-               let newFragment = newJSON.either.fragment {
-                d[key] = newFragment
-                either = .Fragment(.Dictionary(d))
-            }
+        set {
+            set(newJSON: newValue, forKey: key)
         }
         get {
-            guard case .Dictionary(let d)? = either.fragment,
-                  let fragment = d[key] else {
-                return FlexiJSON(error: "Key '\(key)' was not found.")
-            }
-            return FlexiJSON(fragment: fragment)
+            return get(forKey: key)
         }
     }
 
     public subscript(index: Int) -> FlexiJSON {
-        set(newJSON) {
-            if let error = newJSON.error {
-                either = .Error(error)
-                return
-            }
-            if case .Array(var a)? = either.fragment,
-               let newFragment = newJSON.either.fragment {
-                a[index] = newFragment
-                either = .Fragment(.Array(a))
-            }
+        set {
+            set(newJSON: newValue, atIndex: index)
         }
         get {
-            guard case .Array(let a)? = either.fragment else {
-                return FlexiJSON(error: "Attempted to access a nonexistant array.")
-            }
-            guard index < a.count else {
-                return FlexiJSON(error: "Index '\(index)' is out of bounds.")
-            }
-            return FlexiJSON(fragment: a[index])
+            return get(atIndex: index)
         }
+    }
+
+    private mutating func set(newJSON newJSON: FlexiJSON, forKey key: String) {
+        if let error = newJSON.error {
+            either = .Error(error)
+            return
+        }
+        if case .Dictionary(var d)? = either.fragment,
+            let newFragment = newJSON.either.fragment {
+            d[key] = newFragment
+            either = .Fragment(.Dictionary(d))
+        }
+    }
+
+    private mutating func set(newJSON newJSON: FlexiJSON, atIndex index: Int) {
+        if let error = newJSON.error {
+            either = .Error(error)
+            return
+        }
+        if case .Array(var a)? = either.fragment,
+            let newFragment = newJSON.either.fragment {
+            a[index] = newFragment
+            either = .Fragment(.Array(a))
+        }
+    }
+
+    private func get(forKey key: String) -> FlexiJSON {
+        guard case .Dictionary(let d)? = either.fragment,
+            let fragment = d[key] else {
+                return FlexiJSON(error: "Key '\(key)' was not found.")
+        }
+        return FlexiJSON(fragment: fragment)
+    }
+
+    private func get(atIndex index: Int) -> FlexiJSON {
+        guard case .Array(let a)? = either.fragment else {
+            return FlexiJSON(error: "Attempted to access a nonexistant array.")
+        }
+        guard index < a.count else {
+            return FlexiJSON(error: "Index '\(index)' is out of bounds.")
+        }
+        return FlexiJSON(fragment: a[index])
     }
 }
 
