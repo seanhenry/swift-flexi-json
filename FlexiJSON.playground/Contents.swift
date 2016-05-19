@@ -1,8 +1,9 @@
 import FlexiJSON
 /*:
  # FlexiJSON
+ Another Swift JSON library. Effortlessly create, navigate, mutate, compare, and export your JSON.
  ## Creation
- Create a flexible JSON object from dictionary, array, data, string and other JSON fragments.
+ Create a flexible JSON object from `dictionary`, `array`, `data`, `string` and other JSON fragments.
 */
 var json = FlexiJSON(jsonString: "{ \"simple\": \"json\" }")
 let dictionary = [
@@ -56,7 +57,7 @@ builtJSON["new"] = "field"
 builtJSON.dictionary
 /*:
  ## Equatability
- FlexiJSON conforms to the Equatable protocol.
+ `FlexiJSON` conforms to the `Equatable` protocol.
  */
 builtJSON == json
 builtJSON["extra"] = false
@@ -68,3 +69,9 @@ builtJSON == json
 for var item in json["item"]["related_items"] {
     item["id"].int
 }
+/*:
+ ## Output
+ After manipulating your JSON you can export it as a `string` or `data`.
+ */
+builtJSON.jsonString
+builtJSON["item"].data
