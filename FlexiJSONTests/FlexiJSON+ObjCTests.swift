@@ -34,19 +34,19 @@ class FlexiJSON_ObjCTests: XCTestCase {
     }
 
     func test_init_data_shouldSetDictionary() {
-        let data = "{ \"simple\": \"json\" }".dataUsingEncoding(NSUTF8StringEncoding)!
+        let data = "{ \"simple\": \"json\" }".data(using: NSUTF8StringEncoding)!
         let json = FlexiJSON(data: data)
         XCTAssertEqual(json, FlexiJSON(dictionary: ["simple": "json"]))
     }
 
     func test_init_data_shouldSetArray() {
-        let data = "[ { \"simple\": \"json\"} ]".dataUsingEncoding(NSUTF8StringEncoding)!
+        let data = "[ { \"simple\": \"json\"} ]".data(using: NSUTF8StringEncoding)!
         let json = FlexiJSON(data: data)
         XCTAssertEqual(json, FlexiJSON(array: [["simple": "json"]]))
     }
 
     func test_init_data_shouldSetFragment() {
-        let data = "\"string\"".dataUsingEncoding(NSUTF8StringEncoding)!
+        let data = "\"string\"".data(using: NSUTF8StringEncoding)!
         let json = FlexiJSON(data: data)
         XCTAssertEqual(json, FlexiJSON(string: "string"))
     }
@@ -79,13 +79,13 @@ class FlexiJSON_ObjCTests: XCTestCase {
 
     func test_data_shouldConvertDictionary() {
         let dictionary = ["key": "value"]
-        let expected = try? NSJSONSerialization.dataWithJSONObject(dictionary, options: [])
+        let expected = try? NSJSONSerialization.data(withJSONObject: dictionary, options: [])
         XCTAssertEqual(FlexiJSON(dictionary: dictionary).data, expected)
     }
 
     func test_data_shouldConvertArray() {
         let array = [["key": "value"]]
-        let expected = try? NSJSONSerialization.dataWithJSONObject(array, options: [])
+        let expected = try? NSJSONSerialization.data(withJSONObject: array, options: [])
         XCTAssertEqual(FlexiJSON(array: array).data, expected)
     }
 
