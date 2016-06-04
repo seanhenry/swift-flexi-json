@@ -81,7 +81,7 @@ extension FlexiJSON {
 
     public subscript(key: String) -> FlexiJSON {
         set {
-            set(newJSON: newValue, forKey: key)
+            set(new: newValue, forKey: key)
         }
         get {
             return get(forKey: key)
@@ -90,14 +90,14 @@ extension FlexiJSON {
 
     public subscript(index: Int) -> FlexiJSON {
         set {
-            set(newJSON: newValue, atIndex: index)
+            set(new: newValue, atIndex: index)
         }
         get {
             return get(atIndex: index)
         }
     }
 
-    private mutating func set(newJSON newJSON: FlexiJSON, forKey key: String) {
+    private mutating func set(new newJSON: FlexiJSON, forKey key: String) {
         if let error = newJSON.error {
             either = .Error(error)
             return
@@ -109,7 +109,7 @@ extension FlexiJSON {
         }
     }
 
-    private mutating func set(newJSON newJSON: FlexiJSON, atIndex index: Int) {
+    private mutating func set(new newJSON: FlexiJSON, atIndex index: Int) {
         if let error = newJSON.error {
             either = .Error(error)
             return
