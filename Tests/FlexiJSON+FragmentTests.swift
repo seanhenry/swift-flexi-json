@@ -221,7 +221,6 @@ class FlexiJSON_Fragment: XCTestCase {
     }
 
     func test_description_whenNull() {
-        let description = "null"
         XCTAssertEqual(Fragment.Null.description, "null")
     }
 

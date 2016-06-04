@@ -97,8 +97,8 @@
 		1422E7D61CE727EB00A58768 = {
 			isa = PBXGroup;
 			children = (
-				1422E7E21CE727EB00A58768 /* FlexiJSON */,
-				1422E7EE1CE727EB00A58768 /* FlexiJSONTests */,
+				1422E7E21CE727EB00A58768 /* Sources */,
+				1422E7EE1CE727EB00A58768 /* Tests */,
 				1422E7E11CE727EB00A58768 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,11 +112,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1422E7E21CE727EB00A58768 /* FlexiJSON */ = {
+		1422E7E21CE727EB00A58768 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				1422E7E31CE727EB00A58768 /* FlexiJSON.h */,
-				1422E7E51CE727EB00A58768 /* Info.plist */,
 				1422E7FA1CE7283400A58768 /* FlexiJSON.swift */,
 				1444DA2D1CEB8BE10010396E /* FlexiJSON+Either.swift */,
 				1422E7FC1CEA665C00A58768 /* FlexiJSON+Fragment.swift */,
@@ -129,11 +128,12 @@
 				1444DA241CEB7D3E0010396E /* FlexiJSON+DictionaryLiteralConvertible.swift */,
 				1444DA281CEB84A60010396E /* FlexiJSON+Sequence.swift */,
 				14960DFF1CED2A31002781D4 /* FlexiJSON+ObjC.swift */,
+				1422E7E51CE727EB00A58768 /* Info.plist */,
 			);
-			path = FlexiJSON;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		1422E7EE1CE727EB00A58768 /* FlexiJSONTests */ = {
+		1422E7EE1CE727EB00A58768 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				1422E7F11CE727EB00A58768 /* Info.plist */,
@@ -149,7 +149,7 @@
 				1444DA2A1CEB84B40010396E /* FlexiJSON+SequenceTests.swift */,
 				14960E011CED2A4D002781D4 /* FlexiJSON+ObjCTests.swift */,
 			);
-			path = FlexiJSONTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -403,7 +403,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FlexiJSON/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.FlexiJSON;
@@ -421,7 +421,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FlexiJSON/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.FlexiJSON;
@@ -433,7 +433,7 @@
 		1422E7F81CE727EB00A58768 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = FlexiJSONTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.FlexiJSONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -443,7 +443,7 @@
 		1422E7F91CE727EB00A58768 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = FlexiJSONTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.FlexiJSONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
