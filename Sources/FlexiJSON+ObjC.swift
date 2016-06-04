@@ -22,6 +22,7 @@
 // THE SOFTWARE.
 
 import Swift
+import Foundation
 
 extension FlexiJSON {
 
