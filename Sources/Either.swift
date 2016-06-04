@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+Either.swift
+//  Either.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -23,26 +23,23 @@
 
 import Swift
 
-extension FlexiJSON {
+typealias JSONFragment = FlexiJSON.Fragment
 
-    typealias JSONFragment = Fragment
+enum Either {
+    case Fragment(JSONFragment)
+    case Error(String)
 
-    enum Either {
-        case Fragment(JSONFragment)
-        case Error(String)
-
-        var fragment: JSONFragment? {
-            if case .Fragment(let fragment) = self {
-                return fragment
-            }
-            return nil
+    var fragment: JSONFragment? {
+        if case .Fragment(let fragment) = self {
+            return fragment
         }
+        return nil
+    }
 
-        var error: String? {
-            if case .Error(let error) = self {
-                return error
-            }
-            return nil
+    var error: String? {
+        if case .Error(let error) = self {
+            return error
         }
+        return nil
     }
 }
