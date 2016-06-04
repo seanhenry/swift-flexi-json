@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+SequenceType.swift
+//  FlexiJSON+SequenceTests.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -21,18 +21,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Swift
+import XCTest
+@testable import FlexiJSON
 
-extension FlexiJSON: SequenceType {
+class FlexiJSON_SequenceTests: XCTestCase {
 
-    public func generate() -> IndexingGenerator<[FlexiJSON]> {
-        if let array = array {
-            return array.map(toFlexiJSON).generate()
-        }
-        return IndexingGenerator([])
+    func test_makeIterator_shouldHaveZeroCount_whenNotArray() {
+        let json = FlexiJSON(bool: false)
+        XCTAssertEqual(countIterations(json: json), 0)
     }
 
-    private func toFlexiJSON(value: AnyObject) -> FlexiJSON {
-        return FlexiJSON(fragment: .from(value))
+    func test_makeIterator_shouldHaveZeroCount_whenEmptyArray() {
+        let json = FlexiJSON(array: [])
+        XCTAssertEqual(countIterations(json: json), 0)
+    }
+
+    func test_makeIterator_shouldHaveSameCount_asArray() {
+        let json = FlexiJSON(array: [1, 2, 3])
+        XCTAssertEqual(countIterations(json: json), 3)
+    }
+
+    func test_makeIterator_shouldGenerateArrayElements() {
+        let json = FlexiJSON(array: [1, 2, 3])
+        var i: Int64 = 1
+        for fragment in json {
+            XCTAssertEqual(fragment, FlexiJSON(int: i))
+            i += 1
+        }
+    }
+
+    // MARK: - Helpers
+
+    func countIterations(json json: FlexiJSON) -> Int {
+        var count = 0
+        for _ in json {
+            count += 1
+        }
+        return count
     }
 }
