@@ -88,7 +88,7 @@ builtJSON == json
 Iterate through arrays using `for in` syntax.
 
 ```
-for var item in json["item"]["related_items"] {
+for item in json["item"]["related_items"] {
     item["id"].int
 }
 ```
