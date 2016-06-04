@@ -26,7 +26,7 @@ import Swift
 extension FlexiJSON {
 
     public init(data: NSData) {
-        guard let json = try? NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments]) else {
+        guard let json = try? NSJSONSerialization.jsonObject(with: data, options: [.allowFragments]) else {
             self.init(error: "Initialised FlexiJSON with invalid data.")
             return
         }
@@ -34,8 +34,8 @@ extension FlexiJSON {
     }
 
     public init(jsonString: String) {
-        let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
-        let json = try? NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments])
+        let data = jsonString.data(using: NSUTF8StringEncoding)!
+        let json = try? NSJSONSerialization.jsonObject(with: data, options: [.allowFragments])
         guard json != nil else {
             self.init(error: "Initialised FlexiJSON with invalid string.")
             return
@@ -47,7 +47,7 @@ extension FlexiJSON {
         guard let fragment = either.fragment?.cast(AnyObject.self) where NSJSONSerialization.isValidJSONObject(fragment) else {
             return nil
         }
-        return try? NSJSONSerialization.dataWithJSONObject(fragment, options: [])
+        return try? NSJSONSerialization.data(withJSONObject: fragment, options: [])
     }
 
     public var jsonString: String? {
