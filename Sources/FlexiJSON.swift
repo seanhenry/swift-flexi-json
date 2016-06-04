@@ -22,6 +22,7 @@
 // THE SOFTWARE.
 
 import Swift
+import Foundation
 
 public typealias JSONDictionary = [String : AnyObject]
 public typealias JSONArray = [AnyObject]

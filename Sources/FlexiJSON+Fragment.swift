@@ -22,6 +22,7 @@
 // THE SOFTWARE.
 
 import Swift
+import Foundation
 
 // MARK: - Fragments
 extension FlexiJSON {
