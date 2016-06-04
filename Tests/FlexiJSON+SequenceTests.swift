@@ -52,7 +52,7 @@ class FlexiJSON_SequenceTests: XCTestCase {
 
     // MARK: - Helpers
 
-    func countIterations(json json: FlexiJSON) -> Int {
+    func countIterations(json: FlexiJSON) -> Int {
         var count = 0
         for _ in json {
             count += 1
