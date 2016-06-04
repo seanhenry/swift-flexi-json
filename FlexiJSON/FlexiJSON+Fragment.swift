@@ -34,7 +34,7 @@ extension FlexiJSON {
         case Bool(JSONBool)
         case Null
 
-        static func from(anyObject: AnyObject) -> Fragment? {
+        static func from(_ anyObject: AnyObject) -> Fragment? {
             if let string = anyObject as? JSONString {
                 return .String(string)
             } else if let number = anyObject as? NSNumber {
@@ -49,7 +49,7 @@ extension FlexiJSON {
             return nil
         }
 
-        static func from(dictionary: JSONDictionary) -> Fragment? {
+        static func from(_ dictionary: JSONDictionary) -> Fragment? {
             var result = [JSONString : Fragment]()
             for (key, value) in dictionary {
                 guard let value = from(value) else {
@@ -60,7 +60,7 @@ extension FlexiJSON {
             return .Dictionary(result)
         }
 
-        static func from(array: JSONArray) -> Fragment? {
+        static func from(_ array: JSONArray) -> Fragment? {
             var result = [Fragment]()
             for object in array {
                 guard let fragment = from(object) else {
@@ -71,14 +71,14 @@ extension FlexiJSON {
             return .Array(result)
         }
 
-        private static func from(number: NSNumber) -> Fragment {
-            if JSONString.fromCString(number.objCType) == "c" {
+        private static func from(_ number: NSNumber) -> Fragment {
+            if JSONString(validatingUTF8: number.objCType) == "c" {
                 return .Bool(number.boolValue)
             }
             return .Double(number.doubleValue)
         }
 
-        func cast<T>(aClass: T.Type) -> T? {
+        func cast<T>(_ aClass: T.Type) -> T? {
             switch self {
             case .String(let s):
                 return s as? T
@@ -87,15 +87,15 @@ extension FlexiJSON {
             case .Bool(let b):
                 return b as? T
             case .Dictionary(let d):
-                return jsonDictionary(d) as? T
+                return json(from: d) as? T
             case .Array(let a):
-                return jsonArray(a) as? T
+                return json(from: a) as? T
             case .Null:
                 return NSNull() as? T
             }
         }
 
-        private func jsonDictionary(dictionary: [JSONString : Fragment]) -> JSONDictionary? {
+        private func json(from dictionary: [JSONString : Fragment]) -> JSONDictionary? {
             var result = JSONDictionary()
             for (key, value) in dictionary {
                 result[key] = value.cast(AnyObject.self)
@@ -103,7 +103,7 @@ extension FlexiJSON {
             return result
         }
 
-        private func jsonArray(array: [Fragment]) -> JSONArray? {
+        private func json(from array: [Fragment]) -> JSONArray? {
             return array.map { $0.cast(AnyObject.self)! }
         }
     }
