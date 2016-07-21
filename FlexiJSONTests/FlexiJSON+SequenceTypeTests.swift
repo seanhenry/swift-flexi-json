@@ -26,7 +26,7 @@ import XCTest
 
 class FlexiJSON_SequenceTypeTests: XCTestCase {
 
-    func test_generate_shouldHaveZeroCount_whenNotArray() {
+    func test_generate_shouldHaveZeroCount_whenNotArrayOrDictionary() {
         let json = FlexiJSON(bool: false)
         XCTAssertEqual(countIterations(json: json), 0)
     }
@@ -48,6 +48,27 @@ class FlexiJSON_SequenceTypeTests: XCTestCase {
             XCTAssertEqual(fragment, FlexiJSON(int: i))
             i += 1
         }
+    }
+
+    func test_generate_shouldHaveZeroCount_whenEmptyDictionary() {
+        let json = FlexiJSON(dictionary: [:])
+        XCTAssertEqual(countIterations(json: json), 0)
+    }
+
+    func test_generate_shouldHaveSameCount_asDictionary() {
+        let json = FlexiJSON(dictionary: ["1":1, "2":2, "3":3])
+        XCTAssertEqual(countIterations(json: json), 3)
+    }
+
+    func test_generate_shouldGenerateDictionaryValues() {
+        let json = FlexiJSON(dictionary: ["1":1, "2":2, "3":3])
+        var expected: [FlexiJSON] = [["1":1], ["2":2], ["3":3]]
+        for fragment in json {
+            if let i = expected.indexOf(fragment) {
+                expected.removeAtIndex(i)
+            }
+        }
+        XCTAssert(expected.isEmpty)
     }
 
     // MARK: - Helpers
