@@ -84,13 +84,24 @@ builtJSON["extra"] = false
 builtJSON == json
 ```
 
-## Loop
-Iterate through arrays using `for in` syntax.
+## Sequence
+### Loop
+Iterate through arrays and dictionaries using `for in` syntax.
 
 ```
-for item in json["item"]["related_items"] {
-    item["id"].int
+for relatedItem in json["item"]["related_items"] {
+    relatedItem["id"].int
 }
+for item in json["item"] {
+    print(item)
+}
+```
+### map, reduce, filter, flatMap
+Use all the inherited `Sequence` methods. Like `flatMap` to produce an array of strings.
+
+```
+let strings: [String] = json["item"].flatMap { $0.string }
+            
 ```
 
 ## Output
