@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+SequenceTypeTests.swift
+//  FlexiJSON+SequenceTests.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -24,51 +24,30 @@
 import XCTest
 @testable import FlexiJSON
 
-class FlexiJSON_SequenceTypeTests: XCTestCase {
+class FlexiJSON_SequenceTests: XCTestCase {
 
-    func test_generate_shouldHaveZeroCount_whenNotArrayOrDictionary() {
+    func test_makeIterator_shouldHaveZeroCount_whenNotArray() {
         let json = FlexiJSON(bool: false)
         XCTAssertEqual(countIterations(json: json), 0)
     }
 
-    func test_generate_shouldHaveZeroCount_whenEmptyArray() {
+    func test_makeIterator_shouldHaveZeroCount_whenEmptyArray() {
         let json = FlexiJSON(array: [])
         XCTAssertEqual(countIterations(json: json), 0)
     }
 
-    func test_generate_shouldHaveSameCount_asArray() {
+    func test_makeIterator_shouldHaveSameCount_asArray() {
         let json = FlexiJSON(array: [1, 2, 3])
         XCTAssertEqual(countIterations(json: json), 3)
     }
 
-    func test_generate_shouldGenerateArrayElements() {
+    func test_makeIterator_shouldGenerateArrayElements() {
         let json = FlexiJSON(array: [1, 2, 3])
         var i: Int64 = 1
         for fragment in json {
             XCTAssertEqual(fragment, FlexiJSON(int: i))
             i += 1
         }
-    }
-
-    func test_generate_shouldHaveZeroCount_whenEmptyDictionary() {
-        let json = FlexiJSON(dictionary: [:])
-        XCTAssertEqual(countIterations(json: json), 0)
-    }
-
-    func test_generate_shouldHaveSameCount_asDictionary() {
-        let json = FlexiJSON(dictionary: ["1":1, "2":2, "3":3])
-        XCTAssertEqual(countIterations(json: json), 3)
-    }
-
-    func test_generate_shouldGenerateDictionaryValues() {
-        let json = FlexiJSON(dictionary: ["1":1, "2":2, "3":3])
-        var expected: [FlexiJSON] = [["1":1], ["2":2], ["3":3]]
-        for fragment in json {
-            if let i = expected.indexOf(fragment) {
-                expected.removeAtIndex(i)
-            }
-        }
-        XCTAssert(expected.isEmpty)
     }
 
     // MARK: - Helpers

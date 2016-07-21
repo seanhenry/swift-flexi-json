@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+SequenceType.swift
+//  FlexiJSON+Sequence.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -23,22 +23,16 @@
 
 import Swift
 
-extension FlexiJSON: SequenceType {
+extension FlexiJSON: Sequence {
 
-    public func generate() -> AnyGenerator<FlexiJSON> {
+    public func makeIterator() -> IndexingIterator<[FlexiJSON]> {
         if let array = array {
-            return AnyGenerator(array.map(arrayToFlexiJSON).generate())
-        } else if let dictionary = dictionary {
-            return AnyGenerator(dictionary.map(dictionaryToFlexiJSON).generate())
+            return array.map(toFlexiJSON).makeIterator()
         }
-        return AnyGenerator(IndexingGenerator([]))
+        return IndexingIterator(_elements: [])
     }
 
-    private func arrayToFlexiJSON(value: AnyObject) -> FlexiJSON {
+    private func toFlexiJSON(value: AnyObject) -> FlexiJSON {
         return FlexiJSON(fragment: .from(value))
-    }
-
-    private func dictionaryToFlexiJSON(keyValue: (String, AnyObject)) -> FlexiJSON {
-        return FlexiJSON(fragment: .from([keyValue.0: keyValue.1]))
     }
 }
