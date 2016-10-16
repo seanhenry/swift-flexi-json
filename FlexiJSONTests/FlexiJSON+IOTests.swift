@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+ObjCTests.swift
+//  FlexiJSON+IOTests.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -24,29 +24,29 @@
 import XCTest
 @testable import FlexiJSON
 
-class FlexiJSON_ObjCTests: XCTestCase {
+class FlexiJSON_IOTests: XCTestCase {
     
     // MARK: - init data
 
     func test_init_data_shouldSetError_whenInvalidData() {
-        let json = FlexiJSON(data: NSData())
+        let json = FlexiJSON(data: Data())
         XCTAssertEqual(json.error, "Initialised FlexiJSON with invalid data.")
     }
 
     func test_init_data_shouldSetDictionary() {
-        let data = "{ \"simple\": \"json\" }".dataUsingEncoding(NSUTF8StringEncoding)!
+        let data = "{ \"simple\": \"json\" }".data(using: String.Encoding.utf8)!
         let json = FlexiJSON(data: data)
         XCTAssertEqual(json, FlexiJSON(dictionary: ["simple": "json"]))
     }
 
     func test_init_data_shouldSetArray() {
-        let data = "[ { \"simple\": \"json\"} ]".dataUsingEncoding(NSUTF8StringEncoding)!
+        let data = "[ { \"simple\": \"json\"} ]".data(using: String.Encoding.utf8)!
         let json = FlexiJSON(data: data)
         XCTAssertEqual(json, FlexiJSON(array: [["simple": "json"]]))
     }
 
     func test_init_data_shouldSetFragment() {
-        let data = "\"string\"".dataUsingEncoding(NSUTF8StringEncoding)!
+        let data = "\"string\"".data(using: String.Encoding.utf8)!
         let json = FlexiJSON(data: data)
         XCTAssertEqual(json, FlexiJSON(string: "string"))
     }
@@ -79,13 +79,13 @@ class FlexiJSON_ObjCTests: XCTestCase {
 
     func test_data_shouldConvertDictionary() {
         let dictionary = ["key": "value"]
-        let expected = try? NSJSONSerialization.dataWithJSONObject(dictionary, options: [])
+        let expected = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
         XCTAssertEqual(FlexiJSON(dictionary: dictionary).data, expected)
     }
 
     func test_data_shouldConvertArray() {
         let array = [["key": "value"]]
-        let expected = try? NSJSONSerialization.dataWithJSONObject(array, options: [])
+        let expected = try? JSONSerialization.data(withJSONObject: array, options: [])
         XCTAssertEqual(FlexiJSON(array: array).data, expected)
     }
 

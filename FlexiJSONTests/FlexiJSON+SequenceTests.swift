@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+SequenceTypeTests.swift
+//  FlexiJSON+SequenceTests.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -24,7 +24,7 @@
 import XCTest
 @testable import FlexiJSON
 
-class FlexiJSON_SequenceTypeTests: XCTestCase {
+class FlexiJSON_SequenceTests: XCTestCase {
 
     func test_generate_shouldHaveZeroCount_whenNotArrayOrDictionary() {
         let json = FlexiJSON(bool: false)
@@ -64,8 +64,8 @@ class FlexiJSON_SequenceTypeTests: XCTestCase {
         let json = FlexiJSON(dictionary: ["1":1, "2":2, "3":3])
         var expected: [FlexiJSON] = [["1":1], ["2":2], ["3":3]]
         for fragment in json {
-            if let i = expected.indexOf(fragment) {
-                expected.removeAtIndex(i)
+            if let i = expected.index(of: fragment) {
+                expected.remove(at: i)
             }
         }
         XCTAssert(expected.isEmpty)
@@ -73,7 +73,7 @@ class FlexiJSON_SequenceTypeTests: XCTestCase {
 
     // MARK: - Helpers
 
-    func countIterations(json json: FlexiJSON) -> Int {
+    func countIterations(json: FlexiJSON) -> Int {
         var count = 0
         for _ in json {
             count += 1

@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+ObjC.swift
+//  FlexiJSON+Sequence.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -21,39 +21,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Swift
+import Foundation
 
-extension FlexiJSON {
+extension FlexiJSON: Sequence {
 
-    public init(data: NSData) {
-        guard let json = try? NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments]) else {
-            self.init(error: "Initialised FlexiJSON with invalid data.")
-            return
+    public func makeIterator() -> AnyIterator<FlexiJSON> {
+        if let array = array {
+            return AnyIterator(array.map(arrayToFlexiJSON).makeIterator())
+        } else if let dictionary = dictionary {
+            return AnyIterator(dictionary.map(dictionaryToFlexiJSON).makeIterator())
         }
-        self.init(fragment: .from(json))
+        return AnyIterator(IndexingIterator(_elements: []))
     }
 
-    public init(jsonString: String) {
-        let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
-        let json = try? NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments])
-        guard json != nil else {
-            self.init(error: "Initialised FlexiJSON with invalid string.")
-            return
-        }
-        self.init(data: data)
+    private func arrayToFlexiJSON(_ value: Any) -> FlexiJSON {
+        return FlexiJSON(fragment: .from(value))
     }
 
-    public var data: NSData? {
-        guard let fragment = either.fragment?.cast(AnyObject.self) where NSJSONSerialization.isValidJSONObject(fragment) else {
-            return nil
-        }
-        return try? NSJSONSerialization.dataWithJSONObject(fragment, options: [])
-    }
-
-    public var jsonString: String? {
-        guard let data = data else {
-            return nil
-        }
-        return String(data: data, encoding: NSUTF8StringEncoding)
+    private func dictionaryToFlexiJSON(_ keyValue: (String, Any)) -> FlexiJSON {
+        return FlexiJSON(fragment: .from([keyValue.0: keyValue.1]))
     }
 }

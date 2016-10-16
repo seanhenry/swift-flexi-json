@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+NilLiteralConvertible.swift
+//  FlexiJSON+ExpressibleByFloatLiteralTests.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -21,11 +21,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Swift
+import XCTest
+@testable import FlexiJSON
 
-extension FlexiJSON: NilLiteralConvertible {
+class FlexiJSON_ExpressibleByFloatLiteralTests: XCTestCase {
 
-    public init(nilLiteral value: ()) {
-        self.init(null: JSONNull())
+    func test_init_floatLiteral() {
+        let dictionary = ["key": 0.99]
+        var json = FlexiJSON(dictionary: dictionary)
+        json["key"] = 0.11
+        XCTAssertEqual(json["key"].double, 0.11)
     }
 }

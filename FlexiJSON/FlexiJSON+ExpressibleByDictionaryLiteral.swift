@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+StringLiteralConvertible.swift
+//  FlexiJSON+ExpressibleByDictionaryLiteral.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -21,19 +21,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Swift
+import Foundation
 
-extension FlexiJSON: StringLiteralConvertible {
+extension FlexiJSON: ExpressibleByDictionaryLiteral {
 
-    public init(stringLiteral value: StringLiteralType) {
-        self.init(string: value)
-    }
-
-    public init(extendedGraphemeClusterLiteral value: StringLiteralType) {
-        self.init(string: value)
-    }
-
-    public init(unicodeScalarLiteral value: StringLiteralType) {
-        self.init(string: value)
+    public init(dictionaryLiteral elements: (String, Any)...) {
+        let dictionary = elements.reduce([String: Any]()) { d, pair in
+            var d = d
+            d[pair.0] = pair.1
+            return d
+        }
+        self.init(dictionary: dictionary)
     }
 }

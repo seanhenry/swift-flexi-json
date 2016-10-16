@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+FloatLiteralConvertible.swift
+//  FlexiJSON+ExpressibleByIntegerLiteral.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -21,11 +21,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Swift
+import Foundation
 
-extension FlexiJSON: FloatLiteralConvertible {
+extension FlexiJSON: ExpressibleByIntegerLiteral {
 
-    public init(floatLiteral value: Double) {
-        self.init(double: value)
+    public init(integerLiteral value: Int64) {
+        self.init(int: value)
     }
 }

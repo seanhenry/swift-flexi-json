@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+SequenceType.swift
+//  FlexiJSON+ExpressibleByNilLiteral.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -21,24 +21,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Swift
+import Foundation
 
-extension FlexiJSON: SequenceType {
+extension FlexiJSON: ExpressibleByNilLiteral {
 
-    public func generate() -> AnyGenerator<FlexiJSON> {
-        if let array = array {
-            return AnyGenerator(array.map(arrayToFlexiJSON).generate())
-        } else if let dictionary = dictionary {
-            return AnyGenerator(dictionary.map(dictionaryToFlexiJSON).generate())
-        }
-        return AnyGenerator(IndexingGenerator([]))
-    }
-
-    private func arrayToFlexiJSON(value: AnyObject) -> FlexiJSON {
-        return FlexiJSON(fragment: .from(value))
-    }
-
-    private func dictionaryToFlexiJSON(keyValue: (String, AnyObject)) -> FlexiJSON {
-        return FlexiJSON(fragment: .from([keyValue.0: keyValue.1]))
+    public init(nilLiteral value: ()) {
+        self.init(null: JSONNull())
     }
 }

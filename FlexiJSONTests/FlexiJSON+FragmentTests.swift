@@ -31,23 +31,23 @@ class FlexiJSON_Fragment: XCTestCase {
     // MARK: ==
 
     func test_equals_shouldBeTrue_whenStringFragmentsMatch() {
-        XCTAssertEqual(Fragment.String("hello"), Fragment.String("hello"))
+        XCTAssertEqual(Fragment.string("hello"), Fragment.string("hello"))
     }
 
     func test_equals_shouldBeFalse_whenStringFragmentsDoNotMatch() {
-        XCTAssertNotEqual(Fragment.String("hello"), Fragment.String("hi"))
+        XCTAssertNotEqual(Fragment.string("hello"), Fragment.string("hi"))
     }
 
     func test_equals_shouldBeFalse_whenDictionaryFragmentsDoNotMatch() {
-        let dict = ["key": Fragment.String("hi")]
-        let dict2 = ["key": Fragment.String("hello")]
-        XCTAssertNotEqual(Fragment.Dictionary(dict), Fragment.Dictionary(dict2))
+        let dict = ["key": Fragment.string("hi")]
+        let dict2 = ["key": Fragment.string("hello")]
+        XCTAssertNotEqual(Fragment.dictionary(dict), Fragment.dictionary(dict2))
     }
 
     func test_equals_shouldBeFalse_whenDictionaryLengthsAreDifferent() {
-        let dict = ["key": Fragment.String("hello")]
-        let dict2 = ["key": Fragment.String("hello"), "key2" : Fragment.String("some")]
-        XCTAssertNotEqual(Fragment.Dictionary(dict), Fragment.Dictionary(dict2))
+        let dict = ["key": Fragment.string("hello")]
+        let dict2 = ["key": Fragment.string("hello"), "key2" : Fragment.string("some")]
+        XCTAssertNotEqual(Fragment.dictionary(dict), Fragment.dictionary(dict2))
     }
 
     func test_equals_shouldBeTrue_whenDictionariesAreEqual() {
@@ -55,56 +55,56 @@ class FlexiJSON_Fragment: XCTestCase {
     }
 
     func test_equals_shouldBeFalse_whenDoublesAreDifferent() {
-        XCTAssertNotEqual(Fragment.Double(123.456), Fragment.Double(987.654))
+        XCTAssertNotEqual(Fragment.double(123.456), Fragment.double(987.654))
     }
 
     func test_equals_shouldBeTrue_whenDoublesAreEqual() {
-        XCTAssertEqual(Fragment.Double(123.0), Fragment.Double(123.0))
+        XCTAssertEqual(Fragment.double(123.0), Fragment.double(123.0))
     }
 
     func test_equals_shouldBeFalse_whenBoolsAreDifferent() {
-        XCTAssertNotEqual(Fragment.Bool(true), Fragment.Bool(false))
+        XCTAssertNotEqual(Fragment.bool(true), Fragment.bool(false))
     }
 
     func test_equals_shouldBeTrue_whenBoolsAreEqual() {
-        XCTAssertEqual(Fragment.Bool(true), Fragment.Bool(true))
+        XCTAssertEqual(Fragment.bool(true), Fragment.bool(true))
     }
 
     func test_equals_shouldBeFalse_whenArraysAreDifferent() {
-        let array1 = [Fragment.String("hello"), Fragment.Double(123), Fragment.Bool(true)]
-        let array2 = [Fragment.String("hello")]
-        XCTAssertNotEqual(Fragment.Array(array1), Fragment.Array(array2))
+        let array1 = [Fragment.string("hello"), Fragment.double(123), Fragment.bool(true)]
+        let array2 = [Fragment.string("hello")]
+        XCTAssertNotEqual(Fragment.array(array1), Fragment.array(array2))
     }
 
     func test_equals_shouldBeTrue_whenArraysAreEqual() {
-        let array = [Fragment.String("hello"), Fragment.Double(123), Fragment.Bool(true)]
-        XCTAssertEqual(Fragment.Array(array), Fragment.Array(array))
+        let array = [Fragment.string("hello"), Fragment.double(123), Fragment.bool(true)]
+        XCTAssertEqual(Fragment.array(array), Fragment.array(array))
     }
 
     func test_equals_shouldBeFalse_whenFragmentsAreDifferentTypes() {
-        XCTAssertNotEqual(Fragment.Bool(false), Fragment.String("false"))
+        XCTAssertNotEqual(Fragment.bool(false), Fragment.string("false"))
     }
 
     func test_equals_shouldBeTrue_whenBothFragmentsAreNull() {
-        XCTAssertEqual(Fragment.Null, Fragment.Null)
+        XCTAssertEqual(Fragment.null, Fragment.null)
     }
 
-    // MARK: - from: AnyObject
+    // MARK: - from: Any
 
     func test_from_shouldCreateFromString() {
-        XCTAssertEqual(Fragment.from("string"), Fragment.String("string"))
+        XCTAssertEqual(Fragment.from("string"), Fragment.string("string"))
     }
 
     func test_from_shouldCreateFromInt() {
-        XCTAssertEqual(Fragment.from(123), Fragment.Double(123))
+        XCTAssertEqual(Fragment.from(123), Fragment.double(123))
     }
 
     func test_from_shouldCreateFromDouble() {
-        XCTAssertEqual(Fragment.from(123.456), Fragment.Double(123.456))
+        XCTAssertEqual(Fragment.from(123.456), Fragment.double(123.456))
     }
 
     func test_from_shouldCreateFromBool() {
-        XCTAssertEqual(Fragment.from(true), Fragment.Bool(true))
+        XCTAssertEqual(Fragment.from(true), Fragment.bool(true))
     }
 
     func test_from_shouldCreateFromNull() {
@@ -119,13 +119,13 @@ class FlexiJSON_Fragment: XCTestCase {
 
     func test_from_shouldCreateFromDictionary() {
         let fromDictionary = Fragment.from(allTypesDictionary())
-        let dictionary = Fragment.Dictionary(allTypesDictionaryFragment())
+        let dictionary = Fragment.dictionary(allTypesDictionaryFragment())
         XCTAssertEqual(fromDictionary, dictionary)
     }
 
     func test_from_shouldCreateFromNestedDictionary() {
         let fromDictionary = Fragment.from(nestedDictionary())
-        let dictionary = Fragment.Dictionary(nestedDictionaryFragment())
+        let dictionary = Fragment.dictionary(nestedDictionaryFragment())
         XCTAssertEqual(fromDictionary, dictionary)
     }
 
@@ -137,13 +137,13 @@ class FlexiJSON_Fragment: XCTestCase {
 
     func test_from_shouldCreateFromArray() {
         let fromArray = Fragment.from(allTypesArray())
-        let array = Fragment.Array(allTypesArrayFragment())
+        let array = Fragment.array(allTypesArrayFragment())
         XCTAssertEqual(fromArray, array)
     }
 
     func test_from_shouldCreateNestedArray() {
         let fromArray = Fragment.from(nestedArray())
-        let array = Fragment.Array(nestedArrayFragment())
+        let array = Fragment.array(nestedArrayFragment())
         XCTAssertEqual(fromArray, array)
     }
 
@@ -154,80 +154,79 @@ class FlexiJSON_Fragment: XCTestCase {
     // MARK: - cast
 
     func test_cast_shouldConvertString() {
-        XCTAssertEqual(Fragment.String("some").cast(String.self), "some")
+        XCTAssertEqual(Fragment.string("some").cast(String.self), "some")
     }
 
     func test_cast_shouldConvertDouble() {
-        XCTAssertEqual(Fragment.Double(123).cast(Double.self), 123)
+        XCTAssertEqual(Fragment.double(123).cast(Double.self), 123)
     }
 
     func test_cast_shouldConvertBool() {
-        XCTAssertEqual(Fragment.Bool(true).cast(Bool.self), true)
+        XCTAssertEqual(Fragment.bool(true).cast(Bool.self), true)
     }
 
     func test_cast_shouldConvertDictionary() {
-        let dictionary = Fragment.Dictionary(allTypesDictionaryFragment()).cast(JSONDictionary.self)
+        let dictionary = Fragment.dictionary(allTypesDictionaryFragment()).cast(JSONDictionary.self)
         XCTAssertEqual(dictionary?["string"] as? String, "string")
-        XCTAssertEqual(dictionary?["int"] as? Int, 123)
+        XCTAssertEqual(dictionary?["int"] as? NSNumber, 123)
         XCTAssertEqual(dictionary?["double"] as? Double, 123.456)
         XCTAssertEqual(dictionary?["bool"] as? Bool, true)
         XCTAssertEqual(dictionary?.count, 4)
     }
 
     func test_cast_shouldConvertArray() {
-        let array = Fragment.Array(allTypesArrayFragment()).cast(JSONArray.self)
+        let array = Fragment.array(allTypesArrayFragment()).cast(JSONArray.self)
         XCTAssertEqual(array?[0] as? String, "string")
-        XCTAssertEqual(array?[1] as? Int, 123)
-        XCTAssertEqual(array?[1] as? Double, 123.0)
-        XCTAssertEqual(array?[1] as? Bool, true)
+        XCTAssertEqual(array?[1] as? NSNumber, 123)
+        XCTAssertEqual(array?[2] as? Double, 123.456)
+        XCTAssertEqual(array?[3] as? Bool, true)
         XCTAssertEqual(array?.count, 4)
     }
 
     func test_case_shouldConvertNull() {
-        XCTAssertNotNil(Fragment.Null.cast(NSNull.self))
+        XCTAssertNotNil(Fragment.null.cast(NSNull.self))
     }
 
     // MARK: - description
 
     func test_description_whenString() {
         let description = "string"
-        let fragment = Fragment.String(description)
+        let fragment = Fragment.string(description)
         XCTAssertEqual(fragment.description, description)
     }
 
     func test_description_whenDictionary() {
-        let dictionary = ["key": Fragment.String("value")]
+        let dictionary = ["key": Fragment.string("value")]
         let description = dictionary.description
-        XCTAssertEqual(Fragment.Dictionary(dictionary).description, description)
+        XCTAssertEqual(Fragment.dictionary(dictionary).description, description)
     }
 
     func test_description_whenArray() {
-        let array = [Fragment.String("string"), Fragment.Double(123)]
+        let array = [Fragment.string("string"), Fragment.double(123)]
         let description = array.description
-        XCTAssertEqual(Fragment.Array(array).description, description)
+        XCTAssertEqual(Fragment.array(array).description, description)
     }
 
     func test_description_whenDouble() {
         let double = 1.99
         let description = double.description
-        XCTAssertEqual(Fragment.Double(double).description, description)
+        XCTAssertEqual(Fragment.double(double).description, description)
     }
     
 
     func test_description_whenBool() {
         let bool = true
         let description = bool.description
-        XCTAssertEqual(Fragment.Bool(bool).description, description)
+        XCTAssertEqual(Fragment.bool(bool).description, description)
     }
 
     func test_description_whenNull() {
-        let description = "null"
-        XCTAssertEqual(Fragment.Null.description, "null")
+        XCTAssertEqual(Fragment.null.description, "null")
     }
 
     // MARK: - Helpers
 
-    func allTypesDictionary() -> [String : AnyObject] {
+    func allTypesDictionary() -> JSONDictionary {
         return [
             "string": "string",
             "int": 123,
@@ -238,14 +237,14 @@ class FlexiJSON_Fragment: XCTestCase {
 
     func allTypesDictionaryFragment() -> [String : Fragment] {
         return [
-            "string": .String("string"),
-            "int": .Double(123),
-            "double": .Double(123.456),
-            "bool": .Bool(true)
+            "string": .string("string"),
+            "int": .double(123),
+            "double": .double(123.456),
+            "bool": .bool(true)
         ]
     }
 
-    func nestedDictionary() -> [String : AnyObject] {
+    func nestedDictionary() -> JSONDictionary {
         return [
             "1": [
                 "2": [
@@ -257,15 +256,15 @@ class FlexiJSON_Fragment: XCTestCase {
 
     func nestedDictionaryFragment() -> [String : Fragment] {
         return [
-            "1": .Dictionary([
-                "2": .Dictionary([
-                    "3": .String("value")
+            "1": .dictionary([
+                "2": .dictionary([
+                    "3": .string("value")
                     ])
                 ])
         ]
     }
 
-    func allTypesArray() -> [AnyObject] {
+    func allTypesArray() -> [Any] {
         return [
             "string",
             123,
@@ -276,14 +275,14 @@ class FlexiJSON_Fragment: XCTestCase {
 
     func allTypesArrayFragment() -> [Fragment] {
         return [
-            .String("string"),
-            .Double(123),
-            .Double(123.456),
-            .Bool(true)
+            .string("string"),
+            .double(123),
+            .double(123.456),
+            .bool(true)
         ]
     }
 
-    func nestedArray() -> [AnyObject] {
+    func nestedArray() -> JSONArray {
         return [
             [
                 "string",
@@ -296,11 +295,11 @@ class FlexiJSON_Fragment: XCTestCase {
 
     func nestedArrayFragment() -> [Fragment] {
         return [
-            .Array([
-                .String("string"),
-                .Double(123),
-                .Double(123.456),
-                .Bool(true)
+            .array([
+                .string("string"),
+                .double(123),
+                .double(123.456),
+                .bool(true)
                 ])
         ]
     }

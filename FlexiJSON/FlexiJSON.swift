@@ -21,10 +21,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Swift
+import Foundation
 
-public typealias JSONDictionary = [String : AnyObject]
-public typealias JSONArray = [AnyObject]
+public typealias JSONDictionary = [String : Any]
+public typealias JSONArray = [Any]
 public typealias JSONString = String
 public typealias JSONInt = Int64
 public typealias JSONDouble = Double
@@ -44,23 +44,23 @@ public struct FlexiJSON {
     }
 
     public init(string: JSONString) {
-        self.init(fragment: .String(string))
+        self.init(fragment: .string(string))
     }
 
     public init(int: JSONInt) {
-        self.init(fragment: .Double(Double(int)))
+        self.init(fragment: .double(Double(int)))
     }
 
     public init(double: JSONDouble) {
-        self.init(fragment: .Double(double))
+        self.init(fragment: .double(double))
     }
 
     public init(bool: JSONBool) {
-        self.init(fragment: .Bool(bool))
+        self.init(fragment: .bool(bool))
     }
 
     public init(null: JSONNull) {
-        self.init(fragment: .Null)
+        self.init(fragment: .null)
     }
 
     public init(error: String) {
@@ -81,7 +81,7 @@ extension FlexiJSON {
 
     public subscript(key: String) -> FlexiJSON {
         set {
-            set(newJSON: newValue, forKey: key)
+            set(newValue, forKey: key)
         }
         get {
             return get(forKey: key)
@@ -90,39 +90,39 @@ extension FlexiJSON {
 
     public subscript(index: Int) -> FlexiJSON {
         set {
-            set(newJSON: newValue, atIndex: index)
+            set(newValue, atIndex: index)
         }
         get {
             return get(atIndex: index)
         }
     }
 
-    private mutating func set(newJSON newJSON: FlexiJSON, forKey key: String) {
+    private mutating func set(_ newJSON: FlexiJSON, forKey key: String) {
         if let error = newJSON.error {
             either = .Error(error)
             return
         }
-        if case .Dictionary(var d)? = either.fragment,
+        if case .dictionary(var d)? = either.fragment,
             let newFragment = newJSON.either.fragment {
             d[key] = newFragment
-            either = .Fragment(.Dictionary(d))
+            either = .Fragment(.dictionary(d))
         }
     }
 
-    private mutating func set(newJSON newJSON: FlexiJSON, atIndex index: Int) {
+    private mutating func set(_ newJSON: FlexiJSON, atIndex index: Int) {
         if let error = newJSON.error {
             either = .Error(error)
             return
         }
-        if case .Array(var a)? = either.fragment,
+        if case .array(var a)? = either.fragment,
             let newFragment = newJSON.either.fragment {
             a[index] = newFragment
-            either = .Fragment(.Array(a))
+            either = .Fragment(.array(a))
         }
     }
 
     private func get(forKey key: String) -> FlexiJSON {
-        guard case .Dictionary(let d)? = either.fragment,
+        guard case .dictionary(let d)? = either.fragment,
             let fragment = d[key] else {
                 return FlexiJSON(error: "Key '\(key)' was not found.")
         }
@@ -130,7 +130,7 @@ extension FlexiJSON {
     }
 
     private func get(atIndex index: Int) -> FlexiJSON {
-        guard case .Array(let a)? = either.fragment else {
+        guard case .array(let a)? = either.fragment else {
             return FlexiJSON(error: "Attempted to access a nonexistant array.")
         }
         guard index < a.count else {

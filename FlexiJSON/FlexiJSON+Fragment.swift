@@ -21,22 +21,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Swift
+import Foundation
 
 // MARK: - Fragments
 extension FlexiJSON {
 
     enum Fragment: Equatable {
-        case Dictionary([JSONString : Fragment])
-        case Array([Fragment])
-        case String(JSONString)
-        case Double(JSONDouble)
-        case Bool(JSONBool)
-        case Null
+        case dictionary([JSONString : Fragment])
+        case array([Fragment])
+        case string(JSONString)
+        case double(JSONDouble)
+        case bool(JSONBool)
+        case null
 
-        static func from(anyObject: AnyObject) -> Fragment? {
+        static func from(_ anyObject: Any) -> Fragment? {
             if let string = anyObject as? JSONString {
-                return .String(string)
+                return .string(string)
             } else if let number = anyObject as? NSNumber {
                 return from(number)
             } else if let dictionary = anyObject as? JSONDictionary {
@@ -44,12 +44,12 @@ extension FlexiJSON {
             } else if let array = anyObject as? JSONArray {
                 return from(array)
             } else if anyObject is NSNull {
-                return .Null
+                return .null
             }
             return nil
         }
 
-        static func from(dictionary: JSONDictionary) -> Fragment? {
+        static func from(_ dictionary: JSONDictionary) -> Fragment? {
             var result = [JSONString : Fragment]()
             for (key, value) in dictionary {
                 guard let value = from(value) else {
@@ -57,10 +57,10 @@ extension FlexiJSON {
                 }
                 result[key] = value
             }
-            return .Dictionary(result)
+            return .dictionary(result)
         }
 
-        static func from(array: JSONArray) -> Fragment? {
+        static func from(_ array: JSONArray) -> Fragment? {
             var result = [Fragment]()
             for object in array {
                 guard let fragment = from(object) else {
@@ -68,43 +68,43 @@ extension FlexiJSON {
                 }
                 result.append(fragment)
             }
-            return .Array(result)
+            return .array(result)
         }
 
-        private static func from(number: NSNumber) -> Fragment {
-            if JSONString.fromCString(number.objCType) == "c" {
-                return .Bool(number.boolValue)
+        private static func from(_ number: NSNumber) -> Fragment {
+            if JSONString(cString: number.objCType) == "c" {
+                return .bool(number.boolValue)
             }
-            return .Double(number.doubleValue)
+            return .double(number.doubleValue)
         }
 
-        func cast<T>(aClass: T.Type) -> T? {
+        func cast<T>(_ aClass: T.Type) -> T? {
             switch self {
-            case .String(let s):
+            case .string(let s):
                 return s as? T
-            case .Double(let d):
+            case .double(let d):
                 return d as? T
-            case .Bool(let b):
+            case .bool(let b):
                 return b as? T
-            case .Dictionary(let d):
+            case .dictionary(let d):
                 return jsonDictionary(d) as? T
-            case .Array(let a):
+            case .array(let a):
                 return jsonArray(a) as? T
-            case .Null:
+            case .null:
                 return NSNull() as? T
             }
         }
 
-        private func jsonDictionary(dictionary: [JSONString : Fragment]) -> JSONDictionary? {
+        private func jsonDictionary(_ dictionary: [JSONString : Fragment]) -> JSONDictionary? {
             var result = JSONDictionary()
             for (key, value) in dictionary {
-                result[key] = value.cast(AnyObject.self)
+                result[key] = value.cast(Any.self)
             }
             return result
         }
 
-        private func jsonArray(array: [Fragment]) -> JSONArray? {
-            return array.map { $0.cast(AnyObject.self)! }
+        private func jsonArray(_ array: [Fragment]) -> JSONArray? {
+            return array.map { $0.cast(Any.self)! }
         }
     }
 }
@@ -113,17 +113,17 @@ extension FlexiJSON.Fragment: CustomStringConvertible {
 
     var description: JSONString {
         switch self {
-        case .String(let s):
+        case .string(let s):
             return s
-        case .Dictionary(let d):
+        case .dictionary(let d):
             return d.description
-        case .Array(let a):
+        case .array(let a):
             return a.description
-        case .Double(let d):
+        case .double(let d):
             return d.description
-        case .Bool(let b):
+        case .bool(let b):
             return b.description
-        case .Null:
+        case .null:
             return "null"
         }
     }
@@ -141,17 +141,17 @@ private func ==(lhs: [String : FlexiJSON.Fragment], rhs: [String : FlexiJSON.Fra
 
 func ==(lhs: FlexiJSON.Fragment, rhs: FlexiJSON.Fragment) -> Bool {
     switch (lhs, rhs) {
-    case (.String(let lhsString), .String(let rhsString)):
+    case (.string(let lhsString), .string(let rhsString)):
         return lhsString == rhsString
-    case (.Dictionary(let lhsDict), .Dictionary(let rhsDict)):
+    case (.dictionary(let lhsDict), .dictionary(let rhsDict)):
         return lhsDict == rhsDict
-    case (.Double(let lhsDouble), .Double(let rhsDouble)):
+    case (.double(let lhsDouble), .double(let rhsDouble)):
         return lhsDouble == rhsDouble
-    case (.Bool(let lhsBool), .Bool(let rhsBool)):
+    case (.bool(let lhsBool), .bool(let rhsBool)):
         return lhsBool == rhsBool
-    case (.Array(let lhsArray), .Array(let rhsArray)):
+    case (.array(let lhsArray), .array(let rhsArray)):
         return lhsArray == rhsArray
-    case (.Null, .Null):
+    case (.null, .null):
         return true
     default:
         return false

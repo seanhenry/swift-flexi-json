@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+DictionaryLiteralConvertibleTests.swift
+//  FlexiJSON+ExpressibleByStringLiteralTests.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -9,10 +9,10 @@
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,14 +24,12 @@
 import XCTest
 @testable import FlexiJSON
 
-class FlexiJSON_DictionaryLiteralConvertibleTests: XCTestCase {
-
-    func test_dictionaryLiteralConvertible() {
-        var json = FlexiJSON(dictionary: ["1": 123])
-        json["1"] = ["3": 456, "4": "string", "5": ["string"], "6": NSNull(), "7": true]
-
-        let expected = FlexiJSON(dictionary: ["3": 456, "4": "string", "5": ["string"], "6": NSNull(), "7": true])
-        let result = json["1"]
-        XCTAssertEqual(result, expected)
+class FlexiJSON_ExpressibleByStringLiteralTests: XCTestCase {
+    
+    func test_init_stringLiteral() {
+        let dictionary = ["key": "value"]
+        var json = FlexiJSON(dictionary: dictionary)
+        json["key"] = "new value"
+        XCTAssertEqual(json["key"].string, "new value")
     }
 }

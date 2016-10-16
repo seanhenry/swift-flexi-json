@@ -1,5 +1,5 @@
 //
-//  FlexiJSON+Either.swift
+//  FlexiJSON+IO.swift
 //
 //  Copyright © 2016 Sean Henry. All rights reserved.
 //
@@ -25,24 +25,35 @@ import Foundation
 
 extension FlexiJSON {
 
-    typealias JSONFragment = Fragment
+    public init(data: Data) {
+        guard let json = try? JSONSerialization.jsonObject(with: data, options: [.allowFragments]) else {
+            self.init(error: "Initialised FlexiJSON with invalid data.")
+            return
+        }
+        self.init(fragment: .from(json))
+    }
 
-    enum Either {
-        case Fragment(JSONFragment)
-        case Error(String)
+    public init(jsonString: String) {
+        let data = jsonString.data(using: String.Encoding.utf8)!
+        let json = try? JSONSerialization.jsonObject(with: data, options: [.allowFragments])
+        guard json != nil else {
+            self.init(error: "Initialised FlexiJSON with invalid string.")
+            return
+        }
+        self.init(data: data)
+    }
 
-        var fragment: JSONFragment? {
-            if case .Fragment(let fragment) = self {
-                return fragment
-            }
+    public var data: Data? {
+        guard let fragment = either.fragment?.cast(Any.self) , JSONSerialization.isValidJSONObject(fragment) else {
             return nil
         }
+        return try? JSONSerialization.data(withJSONObject: fragment, options: [])
+    }
 
-        var error: String? {
-            if case .Error(let error) = self {
-                return error
-            }
+    public var jsonString: String? {
+        guard let data = data else {
             return nil
         }
+        return String(data: data, encoding: String.Encoding.utf8)
     }
 }
