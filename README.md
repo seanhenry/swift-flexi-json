@@ -1,5 +1,4 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-![Swift Package Manager Compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-4BC51D.svg?style=flat)
 ![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)
 # FlexiJSON
 Another Swift JSON library. Effortlessly create, navigate, mutate, compare, and export your JSON.
