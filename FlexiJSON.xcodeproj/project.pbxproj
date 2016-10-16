@@ -99,8 +99,8 @@
 			isa = PBXGroup;
 			children = (
 				142E70AC1DB387ED006E5288 /* Package.swift */,
-				1422E7E21CE727EB00A58768 /* FlexiJSON */,
-				1422E7EE1CE727EB00A58768 /* FlexiJSONTests */,
+				1422E7E21CE727EB00A58768 /* Sources */,
+				1422E7EE1CE727EB00A58768 /* Tests */,
 				1422E7E11CE727EB00A58768 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -114,7 +114,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1422E7E21CE727EB00A58768 /* FlexiJSON */ = {
+		1422E7E21CE727EB00A58768 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				1422E7E31CE727EB00A58768 /* FlexiJSON.h */,
@@ -132,10 +132,10 @@
 				1444DA281CEB84A60010396E /* FlexiJSON+Sequence.swift */,
 				14960DFF1CED2A31002781D4 /* FlexiJSON+IO.swift */,
 			);
-			path = FlexiJSON;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		1422E7EE1CE727EB00A58768 /* FlexiJSONTests */ = {
+		1422E7EE1CE727EB00A58768 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				1422E7F11CE727EB00A58768 /* Info.plist */,
@@ -151,7 +151,7 @@
 				1444DA2A1CEB84B40010396E /* FlexiJSON+SequenceTests.swift */,
 				14960E011CED2A4D002781D4 /* FlexiJSON+IOTests.swift */,
 			);
-			path = FlexiJSONTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,7 +211,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Sean Henry";
 				TargetAttributes = {
 					1422E7DF1CE727EB00A58768 = {
@@ -322,8 +322,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -371,8 +373,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -392,6 +396,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -403,11 +408,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FlexiJSON/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.FlexiJSON;
@@ -422,11 +428,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FlexiJSON/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.FlexiJSON;
@@ -439,7 +446,7 @@
 		1422E7F81CE727EB00A58768 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = FlexiJSONTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.FlexiJSONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -450,7 +457,7 @@
 		1422E7F91CE727EB00A58768 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = FlexiJSONTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = codes.seanhenry.FlexiJSONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
